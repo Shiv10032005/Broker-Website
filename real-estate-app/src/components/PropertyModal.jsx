@@ -4,6 +4,18 @@ import { formatPrice, calculatePricePerSqft } from '../utils/dataService';
 import './PropertyModal.css';
 
 const PropertyModal = ({ property, onClose }) => {
+  // Pro Tip (Overlay Close Support) - Vanilla JS fallback
+  React.useEffect(() => {
+    const handleWindowClick = (e) => {
+      const modal = document.querySelector('.modal-overlay');
+      if (modal && e.target === modal) {
+        onClose();
+      }
+    };
+    window.addEventListener("click", handleWindowClick);
+    return () => window.removeEventListener("click", handleWindowClick);
+  }, [onClose]);
+
   if (!property) return null;
 
   const pricePerSqft = calculatePricePerSqft(property.price, property.areaSqft);
@@ -40,17 +52,7 @@ const PropertyModal = ({ property, onClose }) => {
     }
   };
 
-  // Pro Tip (Overlay Close Support) - Vanilla JS fallback
-  React.useEffect(() => {
-    const handleWindowClick = (e) => {
-      const modal = document.querySelector('.modal-overlay');
-      if (modal && e.target === modal) {
-        onClose();
-      }
-    };
-    window.addEventListener("click", handleWindowClick);
-    return () => window.removeEventListener("click", handleWindowClick);
-  }, [onClose]);
+  const features = getFeatures(property.type);
 
   return ReactDOM.createPortal(
     <div className="modal-overlay" onClick={onClose}>
