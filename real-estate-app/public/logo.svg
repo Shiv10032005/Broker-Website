@@ -1,0 +1,28 @@
+<svg width="200" height="52" viewBox="0 0 200 52" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="b1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+
+    <linearGradient id="b2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#84cc16"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(10,10)">
+    <!-- land -->
+    <rect x="0" y="24" width="34" height="6" rx="3" fill="url(#b2)"/>
+
+    <!-- buildings -->
+    <rect x="4" y="8" width="8" height="16" rx="2" fill="url(#b1)"/>
+    <rect x="14" y="4" width="10" height="20" rx="2" fill="url(#b1)"/>
+    <rect x="26" y="10" width="6" height="14" rx="2" fill="url(#b1)"/>
+  </g>
+
+  <text x="60" y="34" font-size="22" font-weight="700"
+        font-family="Inter,Segoe UI,sans-serif" fill="#0f172a">
+    LandScope
+  </text>
+</svg>
