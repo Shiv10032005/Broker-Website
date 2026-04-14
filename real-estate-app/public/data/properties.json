@@ -7,8 +7,6 @@
     "city": "Mumbai",
     "state": "Maharashtra",
     "type": "Residential",
-    "latitude": 19.0596,
-    "longitude": 72.8295,
     "images": ["https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800"]
   },
   {
@@ -19,8 +17,6 @@
     "city": "Pune",
     "state": "Maharashtra",
     "type": "Commercial",
-    "latitude": 18.5204,
-    "longitude": 73.8567,
     "images": ["https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800"]
   },
   {
@@ -31,8 +27,6 @@
     "city": "Bangalore",
     "state": "Karnataka",
     "type": "Residential",
-    "latitude": 12.9352,
-    "longitude": 77.6245,
     "images": ["https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800"]
   },
   {
@@ -43,8 +37,6 @@
     "city": "Nashik",
     "state": "Maharashtra",
     "type": "Agricultural",
-    "latitude": 19.9975,
-    "longitude": 73.7898,
     "images": ["https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800"]
   },
   {
@@ -55,8 +47,6 @@
     "city": "Delhi",
     "state": "Delhi",
     "type": "Residential",
-    "latitude": 28.5921,
-    "longitude": 77.0460,
     "images": ["https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800"]
   },
   {
@@ -67,8 +57,6 @@
     "city": "Pune",
     "state": "Maharashtra",
     "type": "Commercial",
-    "latitude": 18.7606,
-    "longitude": 73.8636,
     "images": ["https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800"]
   },
   {
@@ -79,8 +67,6 @@
     "city": "Mumbai",
     "state": "Maharashtra",
     "type": "Residential",
-    "latitude": 19.2183,
-    "longitude": 72.9781,
     "images": ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800"]
   },
   {
@@ -91,8 +77,6 @@
     "city": "Bangalore",
     "state": "Karnataka",
     "type": "Commercial",
-    "latitude": 12.9716,
-    "longitude": 77.5946,
     "images": ["https://images.unsplash.com/photo-1486718448742-163732cd1544?w=800"]
   },
   {
@@ -103,8 +87,6 @@
     "city": "Pune",
     "state": "Maharashtra",
     "type": "Agricultural",
-    "latitude": 18.6298,
-    "longitude": 73.7997,
     "images": ["https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800"]
   },
   {
@@ -115,8 +97,6 @@
     "city": "Delhi",
     "state": "Delhi",
     "type": "Residential",
-    "latitude": 28.5355,
-    "longitude": 77.2230,
     "images": ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"]
   },
   {
@@ -127,8 +107,6 @@
     "city": "Bangalore",
     "state": "Karnataka",
     "type": "Commercial",
-    "latitude": 12.9698,
-    "longitude": 77.7499,
     "images": ["https://images.unsplash.com/photo-1497366216548-37526070297c?w=800"]
   },
   {
@@ -139,8 +117,6 @@
     "city": "Mumbai",
     "state": "Maharashtra",
     "type": "Residential",
-    "latitude": 19.2183,
-    "longitude": 72.9781,
     "images": ["https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800"]
   },
   {
@@ -151,8 +127,6 @@
     "city": "Pune",
     "state": "Maharashtra",
     "type": "Agricultural",
-    "latitude": 18.7542,
-    "longitude": 73.4066,
     "images": ["https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800"]
   },
   {
@@ -163,8 +137,6 @@
     "city": "Delhi",
     "state": "Delhi",
     "type": "Commercial",
-    "latitude": 28.6315,
-    "longitude": 77.2167,
     "images": ["https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800"]
   },
   {
@@ -175,8 +147,6 @@
     "city": "Bangalore",
     "state": "Karnataka",
     "type": "Residential",
-    "latitude": 12.8456,
-    "longitude": 77.6603,
     "images": ["https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800"]
   }
 ]

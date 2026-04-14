@@ -22,15 +22,14 @@ function App() {
     setShowIntro(false);
     setIsLoading(true);
 
-    // Start fetching data while loader is visible
-    loadProperties().then(data => {
+    // Wait for BOTH: data loaded AND minimum display time (3.6s)
+    Promise.all([
+      loadProperties(),
+      new Promise(res => setTimeout(res, 3600))
+    ]).then(([data]) => {
       setPreloadedProperties(data);
-    });
-    
-    // Show loader for 3.6 seconds
-    setTimeout(() => {
       setIsLoading(false);
-    }, 3600);
+    });
   };
 
   const navItems = [

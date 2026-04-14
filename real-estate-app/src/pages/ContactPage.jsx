@@ -9,19 +9,37 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+  const [formError, setFormError] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const validateForm = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      return 'Please enter a valid email address.';
+    }
+    if (formData.phone && !/^[+\d\s\-()]{7,15}$/.test(formData.phone)) {
+      return 'Please enter a valid phone number.';
+    }
+    if (formData.message.trim().length < 10) {
+      return 'Message must be at least 10 characters.';
+    }
+    return '';
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // In a real app, this would send to a backend
-    console.log('Form submitted:', formData);
+    const error = validateForm();
+    if (error) {
+      setFormError(error);
+      return;
+    }
+    setFormError('');
+    // TODO: Connect to backend (Vercel serverless function / Formspree)
+    // Do NOT log formData — it contains PII (name, email, phone)
     setSubmitted(true);
   };
 
@@ -112,6 +130,11 @@ const ContactPage = () => {
             ) : (
               <form onSubmit={handleSubmit} className="contact-form">
                 <h2 className="form-title">Send us a Message</h2>
+                {formError && (
+                  <div style={{ color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '10px 14px', marginBottom: '12px', fontSize: '0.9rem' }}>
+                    ⚠️ {formError}
+                  </div>
+                )}
                 
                 <div className="form-row">
                   <div className="form-group">

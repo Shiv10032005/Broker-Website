@@ -4,18 +4,15 @@ import { formatPrice, calculatePricePerSqft } from '../utils/dataService';
 import './PropertyModal.css';
 
 const PropertyModal = ({ property, onClose }) => {
-  // Pro Tip (Overlay Close Support) - Vanilla JS fallback
+  // Cleanup body overflow on unmount to prevent stuck scroll lock
   React.useEffect(() => {
-    const handleWindowClick = (e) => {
-      const modal = document.querySelector('.modal-overlay');
-      if (modal && e.target === modal) {
-        onClose();
-      }
+    return () => {
+      document.body.style.overflow = '';
     };
-    window.addEventListener("click", handleWindowClick);
-    return () => window.removeEventListener("click", handleWindowClick);
-  }, [onClose]);
+  }, []);
 
+  // Parent already guards: {selectedProperty && <PropertyModal/>}
+  // No early return needed here — hooks must run unconditionally every render
   if (!property) return null;
 
   const pricePerSqft = calculatePricePerSqft(property.price, property.areaSqft);

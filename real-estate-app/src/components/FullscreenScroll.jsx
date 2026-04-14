@@ -7,6 +7,34 @@ import './FullscreenScroll.css';
 // Register GSAP plugins
 gsap.registerPlugin(Observer);
 
+// Static data — defined outside component to avoid stale closure in useEffect
+const SECTIONS = [
+  {
+    title: "Find Your Dream Land",
+    subtitle: "Discover premium properties across India with transparent pricing",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920",
+    cta: { text: "Explore Properties", link: "/listings" }
+  },
+  {
+    title: "Trusted by 10,000+",
+    subtitle: "Happy customers who found their perfect property with us",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920",
+    cta: { text: "View Testimonials", link: "/about" }
+  },
+  {
+    title: "500+ Properties",
+    subtitle: "Verified listings in 15+ cities with clear title documents",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920",
+    cta: { text: "Browse All", link: "/listings" }
+  },
+  {
+    title: "Expert Guidance",
+    subtitle: "Get personalized support throughout your property journey",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920",
+    cta: { text: "Contact Us", link: "/contact" }
+  }
+];
+
 const FullscreenScroll = ({ onComplete }) => {
   const containerRef = useRef(null);
   const sectionsRef = useRef([]);
@@ -17,35 +45,8 @@ const FullscreenScroll = ({ onComplete }) => {
   const currentIndexRef = useRef(-1);
   const animatingRef = useRef(false);
 
-  const sections = [
-    {
-      title: "Find Your Dream Land",
-      subtitle: "Discover premium properties across India with transparent pricing",
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920",
-      cta: { text: "Explore Properties", link: "/listings" }
-    },
-    {
-      title: "Trusted by 10,000+",
-      subtitle: "Happy customers who found their perfect property with us",
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920",
-      cta: { text: "View Testimonials", link: "/about" }
-    },
-    {
-      title: "500+ Properties",
-      subtitle: "Verified listings in 15+ cities with clear title documents",
-      image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920",
-      cta: { text: "Browse All", link: "/listings" }
-    },
-    {
-      title: "Expert Guidance",
-      subtitle: "Get personalized support throughout your property journey",
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920",
-      cta: { text: "Contact Us", link: "/contact" }
-    }
-  ];
-
   useEffect(() => {
-    const wrap = gsap.utils.wrap(0, sections.length);
+    const wrap = gsap.utils.wrap(0, SECTIONS.length);
     
     // Set initial states
     gsap.set(outerWrappersRef.current, { yPercent: 100 });
@@ -103,11 +104,11 @@ const FullscreenScroll = ({ onComplete }) => {
     return () => {
       observer.kill();
     };
-  }, [sections.length]);
+  }, []); // SECTIONS is a module-level constant — deps are stable
 
   return (
     <div className="fullscreen-scroll" ref={containerRef}>
-      {sections.map((section, index) => (
+      {SECTIONS.map((section, index) => (
         <section
           key={index}
           ref={el => sectionsRef.current[index] = el}
@@ -159,7 +160,7 @@ const FullscreenScroll = ({ onComplete }) => {
 
       {/* Navigation Dots */}
       <div className="scroll-dots">
-        {sections.map((_, index) => (
+        {SECTIONS.map((_, index) => (
           <div key={index} className="scroll-dot" />
         ))}
       </div>

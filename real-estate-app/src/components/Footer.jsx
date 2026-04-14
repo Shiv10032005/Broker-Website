@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LogoAnimated from './LogoAnimated';
 import './Footer.css';
@@ -10,6 +10,55 @@ const Footer = () => {
     navigate(path);
     window.scrollTo(0, 0);
   };
+
+// Newsletter sub-component with real submission handling
+function NewsletterForm() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setStatus('loading');
+    try {
+      // TODO: Replace YOUR_FORM_ID with your Formspree form ID
+      // Sign up free at https://formspree.io
+      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      setStatus(res.ok ? 'success' : 'error');
+      if (res.ok) setEmail('');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return <p style={{ color: '#22c55e', fontSize: '0.9rem' }}>✅ Subscribed! You'll hear from us soon.</p>;
+  }
+
+  return (
+    <form className="footer-newsletter-form" onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="Enter your email"
+        className="footer-newsletter-input"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        disabled={status === 'loading'}
+      />
+      <button type="submit" className="footer-newsletter-btn" disabled={status === 'loading'}>
+        {status === 'loading' ? '...' : 'Subscribe'}
+      </button>
+      {status === 'error' && (
+        <p style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '6px' }}>Failed to subscribe. Please try again.</p>
+      )}
+    </form>
+  );
+}
 
   return (
     <footer className="footer">
@@ -81,17 +130,7 @@ const Footer = () => {
           <p className="footer-newsletter-text">
             Subscribe to get updates on new properties and exclusive offers.
           </p>
-          <form className="footer-newsletter-form" onSubmit={(e) => e.preventDefault()}>
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              className="footer-newsletter-input"
-              required
-            />
-            <button type="submit" className="footer-newsletter-btn">
-              Subscribe
-            </button>
-          </form>
+          <NewsletterForm />
         </div>
       </div>
 

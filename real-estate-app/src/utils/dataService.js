@@ -1,13 +1,17 @@
 // Data service for loading and processing property data
 
+// Module-level cache: avoids re-fetching when navigating between pages
+let _propertiesCache = null;
+
 export const loadProperties = async () => {
+  if (_propertiesCache) return _propertiesCache;
   try {
     const response = await fetch('/data/properties.json');
     if (!response.ok) {
-      throw new Error('Failed to load properties');
+      throw new Error(`Failed to load properties: HTTP ${response.status}`);
     }
-    const data = await response.json();
-    return data;
+    _propertiesCache = await response.json();
+    return _propertiesCache;
   } catch (error) {
     console.error('Error loading properties:', error);
     return [];
@@ -15,7 +19,8 @@ export const loadProperties = async () => {
 };
 
 export const calculatePricePerSqft = (price, areaSqft) => {
-  if (areaSqft === 0) return 0;
+  if (!areaSqft || areaSqft <= 0) return 0;
+  if (!price || price <= 0) return 0;
   return Math.round(price / areaSqft);
 };
 
@@ -53,6 +58,8 @@ export const filterProperties = (properties, filters) => {
 };
 
 export const getUniqueCities = (properties) => {
-  const cities = properties.map(p => p.city);
-  return [...new Set(cities)].sort();
+  // js-combine-iterations: single pass into Set, no intermediate array
+  const citySet = new Set();
+  for (const p of properties) citySet.add(p.city);
+  return [...citySet].sort();
 };

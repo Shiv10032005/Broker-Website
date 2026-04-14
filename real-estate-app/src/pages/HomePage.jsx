@@ -8,6 +8,30 @@ import EmptyState from '../components/EmptyState';
 import { loadProperties, filterProperties, getUniqueCities } from '../utils/dataService';
 import ScrollTriggeredFeatures from '../components/ScrollTriggeredFeatures';
 
+// rendering-hoist-jsx: static data hoisted outside component — created once, never recreated
+// Note: stats section uses <ScrollTriggeredFeatures/>, so no STATS array needed here
+
+const TESTIMONIALS = [
+  {
+    name: 'Rahul Sharma',
+    role: 'Property Buyer',
+    text: 'Found my dream plot in Bangalore within 2 weeks! The filtering options made it so easy to find exactly what I was looking for.',
+    avatar: 'RS'
+  },
+  {
+    name: 'Priya Patel',
+    role: 'Real Estate Investor',
+    text: 'Best platform for land investment in India. Transparent pricing and verified listings gave me complete confidence.',
+    avatar: 'PP'
+  },
+  {
+    name: 'Amit Kumar',
+    role: 'First-time Buyer',
+    text: 'The price per sq.ft feature helped me compare properties easily. Excellent experience from start to finish!',
+    avatar: 'AK'
+  }
+];
+
 const HomePage = ({ preloadedProperties = [] }) => {
   const [allProperties, setAllProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
@@ -56,8 +80,10 @@ const HomePage = ({ preloadedProperties = [] }) => {
     setFilteredProperties(filtered);
   }, [filters, allProperties]);
 
-  const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
+  // rerender-functional-setstate: accepts a partial update, merges via prev =>
+  // so JSX event handlers don't need to close over stale `filters` snapshot
+  const handleFilterChange = (partial) => {
+    setFilters(prev => ({ ...prev, ...partial }));
   };
 
   const handleViewDetails = (property) => {
@@ -70,35 +96,8 @@ const HomePage = ({ preloadedProperties = [] }) => {
     document.body.style.overflow = '';
   };
 
-  // Statistics data
-  const stats = [
-    { number: '500+', label: 'Properties Listed', icon: '🏠' },
-    { number: '10K+', label: 'Happy Customers', icon: '😊' },
-    { number: '15+', label: 'Cities Covered', icon: '📍' },
-    { number: '₹500Cr+', label: 'Property Value', icon: '💰' },
-  ];
-
-  // Testimonials
-  const testimonials = [
-    {
-      name: 'Rahul Sharma',
-      role: 'Property Buyer',
-      text: 'Found my dream plot in Bangalore within 2 weeks! The filtering options made it so easy to find exactly what I was looking for.',
-      avatar: 'RS'
-    },
-    {
-      name: 'Priya Patel',
-      role: 'Real Estate Investor',
-      text: 'Best platform for land investment in India. Transparent pricing and verified listings gave me complete confidence.',
-      avatar: 'PP'
-    },
-    {
-      name: 'Amit Kumar',
-      role: 'First-time Buyer',
-      text: 'The price per sq.ft feature helped me compare properties easily. Excellent experience from start to finish!',
-      avatar: 'AK'
-    }
-  ];
+  // Stats and testimonials are now module-level constants (STATS, TESTIMONIALS)
+  // — removed from component body per rendering-hoist-jsx rule
 
   return (
     <div className="home-page">
@@ -150,7 +149,7 @@ const HomePage = ({ preloadedProperties = [] }) => {
             <label>📍 Location</label>
             <select 
               value={filters.city} 
-              onChange={(e) => handleFilterChange({...filters, city: e.target.value})}
+              onChange={(e) => handleFilterChange({ city: e.target.value })}
             >
               <option value="all">All Cities</option>
               {cities.map(city => (
@@ -164,10 +163,7 @@ const HomePage = ({ preloadedProperties = [] }) => {
             <select 
               onChange={(e) => {
                 const type = e.target.value;
-                handleFilterChange({
-                  ...filters, 
-                  types: type ? [type] : []
-                });
+                handleFilterChange({ types: type ? [type] : [] });
               }}
             >
               <option value="">All Types</option>
@@ -182,11 +178,7 @@ const HomePage = ({ preloadedProperties = [] }) => {
             <select 
               onChange={(e) => {
                 const [min, max] = e.target.value.split('-');
-                handleFilterChange({
-                  ...filters, 
-                  minPrice: min || '',
-                  maxPrice: max || ''
-                });
+                handleFilterChange({ minPrice: min || '', maxPrice: max || '' });
               }}
             >
               <option value="">Any Budget</option>
@@ -304,7 +296,7 @@ const HomePage = ({ preloadedProperties = [] }) => {
           See what our clients have to say about their experience with us
         </p>
         <div className="testimonials-grid">
-          {testimonials.map((testimonial, index) => (
+          {TESTIMONIALS.map((testimonial, index) => (
             <div key={index} className="testimonial-card">
               <div className="testimonial-quote">"</div>
               <p className="testimonial-text">{testimonial.text}</p>

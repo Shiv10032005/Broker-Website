@@ -8,7 +8,7 @@ const FilterPanel = ({ filters, onFilterChange, cities }) => {
     const newTypes = filters.types.includes(type)
       ? filters.types.filter((t) => t !== type)
       : [...filters.types, type];
-    onFilterChange({ ...filters, types: newTypes });
+    onFilterChange({ types: newTypes });
   };
 
   const handleClearFilters = () => {
@@ -40,7 +40,7 @@ const FilterPanel = ({ filters, onFilterChange, cities }) => {
           <label className="filter-label">City</label>
           <select
             value={filters.city}
-            onChange={(e) => onFilterChange({ ...filters, city: e.target.value })}
+            onChange={(e) => onFilterChange({ city: e.target.value })}
             className="filter-select"
           >
             <option value="all">All Cities</option>
@@ -76,7 +76,7 @@ const FilterPanel = ({ filters, onFilterChange, cities }) => {
           <input
             type="number"
             value={filters.minPrice}
-            onChange={(e) => onFilterChange({ ...filters, minPrice: e.target.value })}
+            onChange={(e) => onFilterChange({ minPrice: e.target.value })}
             placeholder="e.g., 1000000"
             className="filter-input"
           />
@@ -88,7 +88,7 @@ const FilterPanel = ({ filters, onFilterChange, cities }) => {
           <input
             type="number"
             value={filters.maxPrice}
-            onChange={(e) => onFilterChange({ ...filters, maxPrice: e.target.value })}
+            onChange={(e) => onFilterChange({ maxPrice: e.target.value })}
             placeholder="e.g., 50000000"
             className="filter-input"
           />
@@ -98,4 +98,5 @@ const FilterPanel = ({ filters, onFilterChange, cities }) => {
   );
 };
 
-export default FilterPanel;
+// rerender-memo: only re-renders when filters/cities/onFilterChange props change
+export default React.memo(FilterPanel);

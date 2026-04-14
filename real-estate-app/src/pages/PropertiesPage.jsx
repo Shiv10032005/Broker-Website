@@ -65,8 +65,10 @@ const PropertiesPage = () => {
     setFilteredProperties(filtered);
   }, [filters, allProperties]);
 
-  const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
+  // rerender-functional-setstate: accepts a partial update, merges via prev =>
+  // so JSX event handlers don't need to close over stale `filters` snapshot
+  const handleFilterChange = (partial) => {
+    setFilters(prev => ({ ...prev, ...partial }));
   };
 
   const handleViewDetails = (property) => {
@@ -88,11 +90,12 @@ const PropertiesPage = () => {
       case 'area-large':
         return b.areaSqft - a.areaSqft;
       case 'newest':
-      default:
+      default: {
         // Assume newest means descending ID if IDs are numeric, or fallback to 0 (no sort change)
         const idA = parseInt(a.id) || 0;
         const idB = parseInt(b.id) || 0;
         return idB - idA;
+      }
     }
   });
 
@@ -119,7 +122,7 @@ const PropertiesPage = () => {
               <label>📍 Location</label>
               <select 
                 value={filters.city} 
-                onChange={(e) => handleFilterChange({...filters, city: e.target.value})}
+                onChange={(e) => handleFilterChange({ city: e.target.value })}
               >
                 <option value="all">All Cities</option>
                 {cities.map(city => (

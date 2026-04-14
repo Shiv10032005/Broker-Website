@@ -43,10 +43,10 @@ const PropertyCard = ({ property, onViewDetails }) => {
 
   const amenities = getAmenities(property.type);
 
+  // js-early-exit: guard at top, no unnecessary nesting
   const handleClick = () => {
-    if (onViewDetails) {
-      onViewDetails(property);
-    }
+    if (!onViewDetails) return;
+    onViewDetails(property);
   };
 
   return (
@@ -118,4 +118,5 @@ const PropertyCard = ({ property, onViewDetails }) => {
   );
 };
 
-export default PropertyCard;
+// rerender-memo: skip re-renders when property prop reference hasn't changed
+export default React.memo(PropertyCard);

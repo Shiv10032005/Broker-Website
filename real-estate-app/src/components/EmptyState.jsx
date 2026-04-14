@@ -33,4 +33,4 @@ const EmptyState = () => {
   );
 };
 
-export default EmptyState;
+export default React.memo(EmptyState);
