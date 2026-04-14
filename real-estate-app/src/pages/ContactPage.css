@@ -10,13 +10,14 @@
 }
 
 .contact-title {
-  font-size: 3rem;
+  font-size: clamp(1.875rem, 8vw, 3rem);
   font-weight: 700;
   margin: 0 0 0.5rem 0;
+  word-break: break-word;
 }
 
 .contact-subtitle {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 4vw, 1.25rem);
   opacity: 0.9;
   margin: 0;
 }
@@ -171,10 +172,15 @@
   font-weight: 600;
   font-size: 1rem;
   padding: 1rem 2rem;
+  /* 48px min touch target (mobile skill requirement) */
+  min-height: 48px;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+  /* Prevent accidental scroll on tap */
+  touch-action: manipulation;
 }
 
 .submit-btn:hover {

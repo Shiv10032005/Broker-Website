@@ -5,22 +5,36 @@
 /* Skip Intro Button */
 .skip-intro-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  /* Respect iOS home bar safe area */
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  right: 1rem;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   color: white;
   font-weight: 600;
-  font-size: 1rem;
-  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  /* min touch target: 48px tall per mobile skill */
+  padding: 0.875rem 1.5rem;
+  min-height: 48px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 300;
+  touch-action: manipulation;
 }
 
-.skip-intro-btn:hover {
+@media (min-width: 640px) {
+  .skip-intro-btn {
+    bottom: 2rem;
+    right: 2rem;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+  }
+}
+
+.skip-intro-btn:hover,
+.skip-intro-btn:active {
   background: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
@@ -62,12 +76,14 @@
 }
 
 .hero-title {
-  font-size: 2.5rem;
+  /* Tiny phones: 2rem, scaling up */
+  font-size: clamp(1.875rem, 7vw, 2.5rem);
   font-weight: 800;
   color: #0f172a;
   line-height: 1.2;
   margin: 0 0 1.5rem 0;
   animation: fade-in 0.6s ease-out 0.1s both;
+  word-break: break-word;
 }
 
 @media (min-width: 768px) {
@@ -169,6 +185,14 @@
   border-radius: 1rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   animation: float 3s ease-in-out infinite;
+  /* Hide on small screens to prevent content overlap */
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .hero-floating-card {
+    display: block;
+  }
 }
 
 .floating-stat {
@@ -301,7 +325,7 @@
 }
 
 .section-title {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 700;
   color: #0f172a;
   margin: 0 0 1rem 0;
@@ -618,7 +642,7 @@
 }
 
 .cta-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
   font-weight: 700;
   color: white;
   margin: 0 0 1rem 0;

@@ -4,11 +4,19 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   display: flex;
-  align-items: center;
+  /* Mobile: anchor to bottom like a native bottom sheet */
+  align-items: flex-end;
   justify-content: center;
   z-index: 2000;
-  padding: 1rem;
+  padding: 0;
   animation: fade-in 0.2s ease-out;
+}
+
+@media (min-width: 640px) {
+  .modal-overlay {
+    align-items: center;
+    padding: 1rem;
+  }
 }
 
 @keyframes fade-in {
@@ -18,13 +26,29 @@
 
 .modal-content {
   background: white;
-  border-radius: 1.5rem;
-  max-width: 700px;
+  /* Mobile: fill screen width, take up to full height */
+  border-radius: 1.5rem 1.5rem 0 0;
   width: 100%;
-  max-height: 90vh;
+  max-width: 100%;
+  /* Full height minus status bar; scrollable */
+  max-height: 92dvh;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   animation: slide-up 0.3s ease-out;
+  /* iOS momentum scroll */
+  -webkit-overflow-scrolling: touch;
+  /* Safe area for bottom of screen */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (min-width: 640px) {
+  .modal-content {
+    border-radius: 1.5rem;
+    max-width: 700px;
+    max-height: 90vh;
+    padding-bottom: 0;
+  }
 }
 
 @keyframes slide-up {
@@ -42,8 +66,9 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  /* 48px touch target per mobile skill */
+  width: 3rem;
+  height: 3rem;
   background: white;
   border: none;
   border-radius: 50%;
@@ -55,6 +80,8 @@
   pointer-events: auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  /* Prevent scroll hijack on tap */
+  touch-action: manipulation;
 }
 
 .modal-close:hover {
@@ -251,7 +278,16 @@
 
 .contact-buttons {
   display: flex;
-  gap: 1rem;
+  /* Stack vertically on very small screens */
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 400px) {
+  .contact-buttons {
+    flex-direction: row;
+    gap: 1rem;
+  }
 }
 
 .btn-call,
@@ -261,11 +297,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  /* 48px min touch target per mobile skill */
   padding: 0.875rem;
+  min-height: 48px;
   border-radius: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  touch-action: manipulation;
 }
 
 .btn-call {

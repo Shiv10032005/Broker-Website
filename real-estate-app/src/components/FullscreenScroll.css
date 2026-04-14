@@ -58,12 +58,13 @@
 }
 
 .section-heading {
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 800;
   color: white;
   margin: 0 0 1rem 0;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   line-height: 1.2;
+  word-break: break-word;
 }
 
 @media (min-width: 768px) {
@@ -98,12 +99,22 @@
   background: linear-gradient(135deg, #6366f1 0%, #22d3ee 100%);
   color: white;
   font-weight: 600;
-  font-size: 1.125rem;
-  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  padding: 0.875rem 2rem;
+  /* 52px touch target for primary CTA */
+  min-height: 52px;
   border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
   box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+  touch-action: manipulation;
+}
+
+@media (min-width: 640px) {
+  .section-cta {
+    font-size: 1.125rem;
+    padding: 1rem 2.5rem;
+  }
 }
 
 .section-cta:hover {
@@ -121,10 +132,10 @@
   transform: translateX(5px);
 }
 
-/* Scroll Indicator */
+/* Scroll Indicator — move up from iOS home bar */
 .scroll-indicator {
   position: absolute;
-  bottom: 3rem;
+  bottom: calc(3rem + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -173,12 +184,17 @@
 }
 
 .scroll-dot {
+  /* 44px touch target with padding trick */
   width: 12px;
   height: 12px;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   transition: all 0.3s ease;
   cursor: pointer;
+  /* Extend tap area without changing visual size */
+  padding: 16px;
+  margin: -16px;
+  touch-action: manipulation;
 }
 
 .scroll-dot:hover {
